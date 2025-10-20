@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulario con diferentes tipos de campos</title>
+</head>
+<body>
+    <h1>Formulario con diferentes tipos de campos</h1>
+
+    <form action="act16.1.php" method="post">
+        <label>Nombre:</label>
+        <input type="text" name="nombre"><br><br>
+
+        <label>Apellidos:</label>
+        <input type="text" name="apellidos"><br><br>
+
+        <label>e-mail:</label>
+        <input type="email" name="email"><br><br>
+
+        <label>Contraseña:</label>
+        <input type="password" name="contrasena"><br><br>
+
+        <label>Sexo:</label><br>
+        <input type="radio" name="sexo" value="Hombre"> Hombre<br>
+        <input type="radio" name="sexo" value="Mujer"> Mujer<br><br>
+
+        <label>Profesión:</label><br>
+        <input type="radio" name="profesion" value="Profesor"> Profesor<br>
+        <input type="radio" name="profesion" value="Programador"> Programador<br>
+        <input type="radio" name="profesion" value="Diseñador gráfico"> Diseñador gráfico<br><br>
+
+        <label>Aficiones:</label><br>
+        <input type="checkbox" name="aficiones[]" value="Ciencia"> Ciencia<br>
+        <input type="checkbox" name="aficiones[]" value="Libros"> Libros<br>
+        <input type="checkbox" name="aficiones[]" value="Deportes"> Deportes<br><br>
+
+        <label>Elija la herramienta de diseño web que prefiera:</label><br>
+        <select name="herramienta">
+            <option value="HTML">HTML</option>
+            <option value="CSS">CSS</option>
+            <option value="JavaScript">JavaScript</option>
+            <option value="WordPress">WordPress</option>
+        </select><br><br>
+
+        <label>Indique sus comentarios:</label><br>
+        <textarea name="comentario" rows="5" cols="40"></textarea><br><br>
+
+        <input type="submit" value="Enviar">
+        <input type="reset" value="Limpiar todo">
+    </form>
+</body>
+</html>
