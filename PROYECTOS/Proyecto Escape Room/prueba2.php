@@ -83,7 +83,7 @@ if (isset($_POST['dia']) && isset($_POST['mes'])) {
             </p>
 
             <figure>
-                <img src="assets/ermita.jpg" alt="Ermita (placeholder)" class="img-ermita">
+                <img src="imagenes/img-prueba2.jpg" alt="Ermita (placeholder)" class="img-ermita">
             </figure>
 
             <?php if ($mensaje): ?>
@@ -95,18 +95,17 @@ if (isset($_POST['dia']) && isset($_POST['mes'])) {
             <?php endif; ?>
 
             <form method="post" action="prueba2.php" class="form-challenge">
-                <label for="dia">Día (por ejemplo: domingo)</label>
+                <label for="dia">Día:</label>
                 <input id="dia" name="dia" type="text" required maxlength="50">
 
-                <label for="mes">Mes (por ejemplo: septiembre)</label>
+                <label for="mes">Mes:</label>
                 <input id="mes" name="mes" type="text" required maxlength="50">
 
                 <div class="form-actions">
                     <button type="submit" class="btn primary">Enviar</button>
                 </div>
 
-                <div class="pista-actions">
-                    <button name="pedir_pista" class="btn" type="submit" value="1">Pedir pista</button>
+                <div class="pista-actions"> 
                     <input type="hidden" id="confirm_extra" name="confirm_extra" value="0">
                     <button type="button" id="btnPistaExtra" class="btn danger">Pedir pista extra (1 disponible)</button>
                     <input type="hidden" name="pedir_pista_extra" value="1">

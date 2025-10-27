@@ -28,21 +28,20 @@ if (!isset($_SESSION['started'])) {
     <title>El misterio del Castillo de Luna — Escape Room</title>
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <link rel="stylesheet" href="estilos.css">
-    <link rel="icon" href="assets/favicon.ico">
 </head>
 <body class="page">
     <header class="site-header">
         <h1 class="title">El misterio del Castillo de Luna</h1>
         <p class="subtitle">Un Escape Room educativo sobre el patrimonio de Mairena del Alcor</p>
         <div class="controls">
-            <button id="contrastBtn" class="btn small">Aumentar contraste</button>
+            
             <a class="btn small" href="index.php?reset=1">Volver a empezar</a>
         </div>
     </header>
 
     <main class="content">
         <section class="intro">
-            <img src="assets/castle.jpg" alt="Castillo de Luna (placeholder)" class="hero">
+            <img src="imagenes/castillo-de-luna.jpg" alt="Castillo de Luna (placeholder)" class="hero">
             <p>
                 Noche de tormenta sobre los Alcores. Un rayo iluminó el castillo y, al segundo parpadear,
                 encontraste a tus pies un pergamino rasgado: alguien intentó borrar la historia.

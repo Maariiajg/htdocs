@@ -11,15 +11,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 // Manejo de formulario
 $mensaje = '';
-$pistaMostrada = '';
 $pistaExtraConfirm = false;
 $prueba = 1;
 
-// Si se solicitó pista normal
-if (isset($_POST['pedir_pista'])) {
-    // Mostrar la primera pista normal (índice 0)
-    $pistaMostrada = obtenerPista($prueba, 'normal', 0);
-}
 
 // Si se solicitó pista extra (confirmada por JS)
 if (isset($_POST['pedir_pista_extra']) && isset($_POST['confirm_extra']) && $_POST['confirm_extra'] === '1') {
@@ -79,7 +73,7 @@ if (isset($_POST['respuesta1'])) {
 
             <figure>
                 <!-- Imagen borrosa/distorsionada: placeholder en assets/inscription.png -->
-                <img src="assets/inscription.png" alt="Losa con inscripción (imagen borrosa)" class="img-inscription">
+                <img src="imagenes/img-prueba1.png" alt="Losa con inscripción (imagen borrosa)" class="img-inscription">
                 <figcaption>Transcribe la palabra escrita en la losa</figcaption>
             </figure>
 
@@ -100,8 +94,6 @@ if (isset($_POST['respuesta1'])) {
                 </div>
 
                 <div class="pista-actions">
-                    <button name="pedir_pista" class="btn" type="submit" value="1">Pedir pista</button>
-
                     <!-- Pista extra: pedimos confirmación por JS (interactividad.js) -->
                     <input type="hidden" id="confirm_extra" name="confirm_extra" value="0">
                     <button type="button" id="btnPistaExtra" class="btn danger">Pedir pista extra (1 disponible)</button>

@@ -79,7 +79,7 @@ if (isset($_POST['respuesta3'])) {
             </p>
 
             <figure>
-                <img src="assets/feria.jpg" alt="Recinto ferial (placeholder)" class="img-feria">
+                <img src="imagenes/img-prueba3.jpg" alt="Recinto ferial (placeholder)" class="img-feria">
             </figure>
 
             <?php if ($mensaje): ?>
