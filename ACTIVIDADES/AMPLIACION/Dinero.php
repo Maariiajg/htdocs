@@ -27,9 +27,9 @@
                 $cantidad = $cantidad % $valor;   // Resto
 
                 if ($valor >= 5) {
-                    echo "$num billete" . ($num == 1 ? "" : "s") . " de $valor<br>";
+                    echo "$num billetes de $valor euros</br>";
                 } else {
-                    echo "$num moneda" . ($num == 1 ? "" : "s") . " de $valor<br>";
+                    echo "$num modenas de $valor euros</br>";
                 }
             }
         } else {
