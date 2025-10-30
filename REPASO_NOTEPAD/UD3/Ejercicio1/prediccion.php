@@ -28,7 +28,7 @@
 		}else{
 			$pronostico = "frio";
 		}
-		return $pronostico;
+		return $pronostico; 
 	}	
 	
 	//calculamos media con la funcion (la crearemos mas adelante)
