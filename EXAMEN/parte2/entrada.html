@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Entrada de películas</title>
+  <style>
+    body{font-family:sans-serif;max-width:760px;margin:2rem auto}
+    table{border-collapse:collapse;width:100%}
+    th,td{border:1px solid #ccc;padding:.5rem;text-align:left}
+    thead th{background:#f3f3f3}
+  </style>
+</head>
+<body>
+  <h1>Formulario: Lista de películas</h1>
+  <p>Introduce al menos <strong>4 películas</strong> con título, año y duración (min).</p>
+
+
+  <form action="clasificar.php" method="post">
+    <table>
+      <thead>
+        <tr><th>Título</th><th>Año</th><th>Duración (min)</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><input type="text"   name="titulo[]"   required></td>
+          <td><input type="number" name="anio[]"     min="1888" max="2100" required></td>
+          <td><input type="number" name="duracion[]" min="1"    max="600"  required></td>
+        </tr>
+        <tr>
+          <td><input type="text"   name="titulo[]"   required></td>
+          <td><input type="number" name="anio[]"     min="1888" max="2100" required></td>
+          <td><input type="number" name="duracion[]" min="1"    max="600"  required></td>
+        </tr>
+        <tr>
+          <td><input type="text"   name="titulo[]"   required></td>
+          <td><input type="number" name="anio[]"     min="1888" max="2100" required></td>
+          <td><input type="number" name="duracion[]" min="1"    max="600"  required></td>
+        </tr>
+        <tr>
+          <td><input type="text"   name="titulo[]"   required></td>
+          <td><input type="number" name="anio[]"     min="1888" max="2100" required></td>
+          <td><input type="number" name="duracion[]" min="1"    max="600"  required></td>
+        </tr>
+      </tbody>
+    </table>
+
+
+    <p style="margin-top:1rem">
+      <button type="submit">Clasificar películas</button>
+    </p>
+  </form>
+</body>
+</html>
