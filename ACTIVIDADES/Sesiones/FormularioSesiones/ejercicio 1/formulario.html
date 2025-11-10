@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTf-8">
+        <title>Formulario para el ingreso de datos</title>
+    </head>
+    <body>
+        <h1>Formulario para el ingreso de datos</h1>
+        <p>Introduce tu nombre y apellidos para acceder a la página de bienvenida.</p>
+        
+        <form action="almacenar.php" method="POST">
+        <label for="nombre">Nombre:</label>
+        <input type="text" name="nombre" id="nombre" required><br><br>
+
+        <label for="apellidos">Apellidos:</label>
+        <input type="text" name="apellidos" id="apellidos" required><br><br>
+
+        <input type="submit" value="Guardar">
+    </form>
+    </body>
+
+</html>
