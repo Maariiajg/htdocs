@@ -42,7 +42,8 @@ try {
     //Guardar los datos en sesión
     $_SESSION['usuario'] = $usuario;
     $_SESSION['correo'] = $correo;
-
+    $_SESSION['cine'] = $cine; 
+    
     //Guardar el cine en una cookie de 1 hora
     setcookie("cine", $cine, time() + 3600);
 

@@ -11,12 +11,36 @@ class ComposerStaticInit24de441cf5863e7c02d86cd110b5ac22
         array (
             'Mjimgon946\\Cine\\' => 16,
         ),
+        'E' =>
+        array (
+            'Endroid\\QrCode\\' => 15,
+        ),
+        'D' =>
+        array (
+            'DASPRiD\\Enum\\' => 13,
+        ),
+        'B' =>
+        array (
+            'BaconQrCode\\' => 12,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
         'Mjimgon946\\Cine\\' =>
         array (
             0 => __DIR__ . '/../..' . '/src',
+        ),
+        'Endroid\\QrCode\\' =>
+        array (
+            0 => __DIR__ . '/..' . '/endroid/qr-code/src',
+        ),
+        'DASPRiD\\Enum\\' =>
+        array (
+            0 => __DIR__ . '/..' . '/dasprid/enum/src',
+        ),
+        'BaconQrCode\\' =>
+        array (
+            0 => __DIR__ . '/..' . '/bacon/bacon-qr-code/src',
         ),
     );
 

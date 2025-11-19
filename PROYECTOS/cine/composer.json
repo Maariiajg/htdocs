@@ -11,5 +11,7 @@
             "email": "marijimegonz@gmail.com"
         }
     ],
-    "require": {}
+    "require": {
+        "endroid/qr-code": "^4.8"
+    }
 }
