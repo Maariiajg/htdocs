@@ -1,67 +1,80 @@
 <?php
 session_start();
-require_once "libs/phpqrcode/qrlib.php";   // Ruta a la librería QR (ajústala si está en otro sitio)
 
-// 1. Comprobar sesión
-if (!isset($_SESSION['usuario'], $_SESSION['correo'])) {
-    header("Location: inicio.php?error=" . urlencode("Debe iniciar sesión."));
-    exit();
-}
+require_once 'vendor/autoload.php';
 
-// 2. Comprobar cookie del cine
-if (!isset($_COOKIE['cine'])) {
-    header("Location: inicio.php?error=" . urlencode("Debe seleccionar un cine."));
-    exit();
-}
+use Endroid\QrCode\Builder\Builder;
+use Endroid\QrCode\Encoding\Encoding;
+use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelHigh;
+use Endroid\QrCode\Writer\PngWriter;
 
-// 3. Recibir el asiento por GET
+// 1️⃣ Recibir asiento por GET
 if (!isset($_GET['asiento'])) {
-    header("Location: asientos.php?error=" . urlencode("Debe elegir un asiento."));
-    exit();
+    die("No se ha seleccionado asiento.");
 }
 
-$usuario = $_SESSION['usuario'];
-$cine = $_COOKIE['cine'];
-$asiento = intval($_GET['asiento']);
+// Guardar asiento en la sesión
+$_SESSION['asiento'] = $_GET['asiento'];
 
-// 4. Generar el contenido del QR
-$qr_contenido = "http://localhost/proyecto/entrada.php?usuario=$usuario&asiento=$asiento&cine=$cine";
+// 2️⃣ Cargar datos de sesión
+$usuario = $_SESSION['usuario'] ?? null;
+$cine    = $_SESSION['cine'] ?? null;
+$asiento = $_SESSION['asiento'] ?? null;
 
-// 5. Generar archivo temporal del QR
-$nombreQR = "qr_" . $usuario . "_" . $asiento . ".png";
-$rutaQR = "qrs/" . $nombreQR;
-
-// Crear carpeta si no existe
-if (!file_exists("qrs")) {
-    mkdir("qrs", 0777, true);
+// Validación
+if (!$usuario || !$cine || !$asiento) {
+    die("Faltan datos para generar QR");
 }
 
-// Generar el código QR
-QRcode::png($qr_contenido, $rutaQR, QR_ECLEVEL_L, 5);
+// 3️⃣ Construir URL que contendrá el QR
+$entrada_url = "http://localhost/proyecto/entrada.php?usuario=" 
+    . urlencode($usuario) 
+    . "&asiento=" . urlencode($asiento) 
+    . "&cine=" . urlencode($cine);
+
+// 4️⃣ Generar QR con Builder (versión 4.4.x)
+$result = Builder::create()
+    ->writer(new PngWriter())
+    ->data($entrada_url)
+    ->encoding(new Encoding('UTF-8'))
+    ->errorCorrectionLevel(new ErrorCorrectionLevelHigh())
+    ->size(250)
+    ->margin(10)
+    ->build();
+
+// Guardar el QR en archivo temporal
+$qr_file = 'qr_temp.png';
+$result->saveToFile($qr_file);
 
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Código QR de la Entrada</title>
+    <title>Entrada QR</title>
 </head>
 <body>
 
-    <h1>Entrada generada para <?php echo htmlspecialchars($usuario); ?></h1>
-    <p><b>Cine:</b> <?php echo htmlspecialchars($cine); ?></p>
-    <p><b>Asiento:</b> <?php echo $asiento; ?></p>
+<h1>Entrada de Cine</h1>
 
-    <h2>Tu Código QR:</h2>
-    <img src="<?php echo $rutaQR; ?>" alt="Código QR">
+<!-- Mostrar el QR -->
+<img src="<?= $qr_file ?>" alt="Código QR">
 
-    <br><br>
+<p><strong>URL del QR:</strong><br><?= $entrada_url ?></p>
 
-    <a href="codigopdf.php?qr=<?php echo urlencode($nombreQR); ?>&asiento=<?php echo $asiento; ?>">Descargar PDF</a>
-    <br><br>
+<!-- Enlace para descargar PDF -->
+<p>
+    <a href="codigopdf.php?usuario=<?= urlencode($usuario) ?>&asiento=<?= urlencode($asiento) ?>&cine=<?= urlencode($cine) ?>" target="_blank">
+        Descargar PDF
+    </a>
+</p>
 
-    <a href="codigocorreo.php?qr=<?php echo urlencode($nombreQR); ?>&asiento=<?php echo $asiento; ?>">Enviar entrada por correo electrónico</a>
+<!-- Enviar por correo -->
+<p>
+    <a href="codigocorreo.php?usuario=<?= urlencode($usuario) ?>&asiento=<?= urlencode($asiento) ?>&cine=<?= urlencode($cine) ?>">
+        Enviar entrada por correo electrónico
+    </a>
+</p>
 
 </body>
 </html>

@@ -1,0 +1,15 @@
+{
+    "name": "mjimgon946/cine",
+    "autoload": {
+        "psr-4": {
+            "Mjimgon946\\Cine\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Maariiajg",
+            "email": "marijimegonz@gmail.com"
+        }
+    ],
+    "require": {}
+}

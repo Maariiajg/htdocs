@@ -9,10 +9,9 @@
     <h1>Rellene los datos</h1>
 
     <?php
-    // Mostrar mensajes de error enviados desde validacion.php
-    if (isset($_GET['error'])) {
-        echo "<p style='color:red; font-weight:bold'>" . htmlspecialchars($_GET['error']) . "</p>";
-    }
+        if(isset($_GET["error"])) {
+            echo "<p style='color:red; font-weight:bold;'>".$_GET["error"]."</p>";
+        }
     ?>
 
     <form action="validacion.php" method="POST">

@@ -1,6 +1,9 @@
 <?php
 session_start();
-
+echo $_POST["usuario"];
+echo $_POST["contrasenna"];
+echo $_POST["correo"];
+echo $_POST["cine"];
 try {
 
     //Comprobar que llegan los datos
