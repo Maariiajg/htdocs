@@ -1,59 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ejercicio 1</title>
+    <title>Registro de Errores en un Archivo de Log</title>
 </head>
 <body>
+    <h1>Registro de Errores en un Archivo de Log</h1>
+    <p>Selecciona entre estas dos figuras.</p>
 
-    <?php
+    <form action="procesar_area.php" method="POST">
 
-        function validarBase($base){
-            if($edad < 18){
-                throw new Exception ("Edad insuficiente para acceder.");
-            }
-            return true;
-        }
+        <label for="areas">Elegir figura:</label>
+        <select id="areas" name="figura">
+            <option value="triangulo">Área del triángulo</option>
+            <option value="circulo">Área del círculo</option>
+        </select><br><br>
 
-        try{
-            if(isset($_POST["base"]) && isset($_POST["altura"])){
-            $base = $_POST["base"];
-            $altura = $_POST["altura"];
-            echo "El area del triangulo es: " . ($base * $altura) / 2;
-            }
+        <p>Introduce los datos necesarios según tu figura:</p>
 
-            if(isset($_POST["radio"])){
-            $radio = $_POST["radio"];
-            echo "El area del triangulo es: " . ($base * $altura) / 2;
-            }
-        }catch (Exception $e){
-            echo "Error: " . $e->getMessage();
-        }
-
-        function manejadorErrores($errno, $errstr, $errfile, $errline) {
-        echo "Ocurrió el error: $errstr en el archivo $errfile en la línea $errline";
-        $mensaje = "Error: [$errno] $errstr - Archivo: $errfile, Linea: $errline";
-        error_log($mensaje, 3, "errores.log");
-    }
-
-    // Asignamos nuestro manejador de errores
-    set_error_handler("manejadorErrores");
-
-    
-        
-    ?>
-    <form method="post" action="<?php $_SERVER['PHP_SELF']; ?>">
         <label for="base">Base:</label>
-        <input type="number" id="base" name="base"> <br>
+        <input type="number" name="base" id="base"><br><br>
 
         <label for="altura">Altura:</label>
-        <input type="number" id="altura" name="altura"> <br>
+        <input type="number" name="altura" id="altura"><br><br>
 
         <label for="radio">Radio:</label>
-        <input type="number" id="radio" name="radio"><br>
+        <input type="number" name="radio" id="radio"><br><br>
 
-        <input type="submit" value="enviar">
+        <input type="submit" value="Calcular">
     </form>
+
 </body>
 </html>
