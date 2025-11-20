@@ -60,7 +60,7 @@ $result->saveToFile($qr_file);
 <!-- Mostrar el QR -->
 <img src="<?= $qr_file ?>" alt="Código QR">
 
-<p><strong>URL del QR:</strong><br><?= $entrada_url ?></p>
+
 
 <!-- Enlace para descargar PDF -->
 <p>
