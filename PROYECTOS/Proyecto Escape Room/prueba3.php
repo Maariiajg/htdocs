@@ -73,9 +73,11 @@ if (isset($_POST['respuesta3'])) {
     <main class="content">
         <section class="challenge">
             <p>
-                En el tablón del recinto ferial hay recortes de prensa con una frase en clave:
-                <em>"Donde la fiesta nace antes que en Sevilla, hallarás el apellido que cerrará el pergamino".</em>
-                Escribe el apellido histórico ligado al castillo que completa el pergamino.
+                Otro rayo atraviesa el cielo, tras el resplandor ves como las nubes y la oscuridad sedisipan levemente, sabes que estás restaurando a historia de mairena, estás a punto de salvarla.
+                Entras a la hermita a buscar alguna otra pista pero está completamente vacía, salvo un clavel rojo colocado cuidadosamente en el centro de la ermita. En ese momento recuerdas la principal fiesta del pueblo y decides dirigirte a toda prisa al recinto ferial.
+                Al llegar lo encuentras desierto, caminando por sus calles llegas al caballo, en la valla que lo protege ves un trozo de pergamino con el siguiente texto:
+                <em>"Con mas de 500 años, la feria de mairena se convierte en la mas antigua de Andalucía, comenzó como feria de ganado, concedida por el padre de Isabel la Católica".</em>
+                Di el año y fundador de esta feria q ha pasado a ser una gran festividad del pueblo. (respuestas año: 1441 y fundador: Juan II de Castilla)
             </p>
 
             <figure>

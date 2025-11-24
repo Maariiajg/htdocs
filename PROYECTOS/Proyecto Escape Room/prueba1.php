@@ -41,6 +41,8 @@ if (isset($_POST['respuesta1'])) {
         $intentosRestantes = incrementarIntento($prueba);
         if ($intentosRestantes <= 0) {
             $mensaje = 'Has agotado los intentos para esta prueba. Pulsa "Volver a empezar" para intentarlo de nuevo.';
+            header("Location: index.php");
+            exit;
         } else {
             $mensaje = "Respuesta incorrecta. Intentos restantes: $intentosRestantes";
         }

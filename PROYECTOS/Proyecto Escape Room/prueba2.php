@@ -78,6 +78,8 @@ if (isset($_POST['dia']) && isset($_POST['mes'])) {
     <main class="content">
         <section class="challenge">
             <p>
+                Tras descifrar el texto de la piedra y decirlo en voz alta, otro rayo atraviesa el cielo y la lluvia cesa.
+                a un lado de la roca ves una estampita de la patrona de Mairena y decides ir a la ermita principal.
                 En la puerta de la ermita cuelga una nota: <em>"La romería en honor a nuestra patrona se celebra el último ___ de ___."</em>
                 Rellena ambos espacios (día y mes).
             </p>

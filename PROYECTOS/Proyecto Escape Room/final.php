@@ -27,9 +27,11 @@ if (!isset($_SESSION['prueba1_correcta']) || !$_SESSION['prueba1_correcta']
     <main class="content">
         <section class="final">
             <p class="celebration">
-                Al escribir <strong>LUNA</strong>, las piezas del pergamino encajan. Una luz cálida recorre el castillo
-                y las sombras se disipan. Se descubre que la familia <em>Luna</em> protegió el pueblo en la Edad Media,
-                y gracias a ti el archivo municipal recupera su memoria.
+                Tras recordar la fundación de la fiesta principal del pueblo otro rayo atraviesa el cielo, las pizas del pergamino empiezan a flotar y se juntan con un brillo impresionante, unos segundos despues 
+                y como por arte de magia la oscuridad desaparece, las calles del recinto ferial se llenan de trajes de flamenca, claveles, caballos y esa alegria caracteristica de este pueblo.
+                Con cierta calidez en el pecho sales del recinto ferial dejando esa alegria a las espaldas y decides dar un paseo por las calles, la luz y la alegria recorre las cxalles, la ermita vuelve a estar llena de esas imagenes y flores para honrrarlas. 
+                Camino al castillo observas la vega, tierra de cultivos que esa tarde tiene un brillo especial. Finalmentes llegas al catillo de la familia Luna, donde toda esta aventura empezó, miras hacia el muro de la primera inscripsión y te alegra ver que cuenta la historia del castillo.
+                Con una sonrisa pasa hasta el anochecer leyendo la esa inscripción para no permitir que la historia vuelva a morir y paseando por sus jardines.
             </p>
 
             <p class="congrats">
