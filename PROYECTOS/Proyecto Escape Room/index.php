@@ -16,7 +16,7 @@ if (!isset($_SESSION['started'])) {
 }
 
 ?>
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="utf-8" />
@@ -34,27 +34,14 @@ if (!isset($_SESSION['started'])) {
         <section class="intro">
             <img src="imagenes/castillo-de-luna.jpg" alt="Castillo de Luna" class="hero">
             <p>
-                Noche de tormenta sobre los Alcores. Un rayo iluminó el castillo y
-                encontraste a tus pies un pergamino rasgado: alguien intentó borrar la historia.
-                Eres alumno del archivo municipal y debes recomponer el pergamino antes de que el reloj de la torre marque la medianoche.
-                Tres secretos te esperan dentro del Castillo de Luna y en otros lugares emblemáticos del pueblo.
-                Si los resuelves, restaurarás la memoria y romperás la sombra que amenaza al pueblo.
+                Noche de tormenta sobre los Alcores. Un rayo iluminó el castillo y tras un rayo atronador miras al suelo y
+                encuentras a tus pies un pergamino rasgado, muestra una imagen del castillo del pueblo y una series de letras cada vez mas borrosas 
+                que desaparecen por momentos. ¡La historia de Mairena se está desvaneciendo y debes salvarla!
             </p>
-
-            <details>
-                <summary>Breve nota histórica (opcional)</summary>
-                <p>
-                    El Castillo de Mairena conserva trazas datadas desde el siglo XIV y ha sido un símbolo local durante siglos.
-                </p>
-            </details>
 
             <form action="prueba1.php" method="get">
-                <button type="submit" class="btn primary">Comenzar la aventura</button>
+                <button type="submit" class="boton principales">Comenzar la aventura</button>
             </form>
-
-            <p class="nota">
-                Usa el botón "Volver a empezar" en cualquier momento para reiniciar la partida.
-            </p>
         </section>
     </main>
 

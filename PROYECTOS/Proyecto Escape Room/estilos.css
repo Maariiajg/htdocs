@@ -105,7 +105,7 @@ font-size: 16px;
 /* ------------------------------
 Botones
 --------------------------------*/
-.btn {
+.boton {
 display: inline-block;
 padding: 8px 14px;
 border-radius: 8px;
@@ -118,24 +118,11 @@ box-shadow: inset -3px -3px 6px rgba(0, 0, 0, 0.03);
 transition: transform 0.1s ease-in-out;
 }
 
-.btn:hover {
-transform: translateY(-1px);
-}
-
-.btn.primary {
+.boton .principales {
 background: #cfa66e;
 color: #fff;
 }
 
-.btn.danger {
-background: #d7735a;
-color: #fff;
-}
-
-.btn.small {
-padding: 6px 10px;
-font-size: 14px;
-}
 
 /* ------------------------------
 Mensajes
