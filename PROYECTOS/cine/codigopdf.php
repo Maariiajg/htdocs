@@ -8,24 +8,23 @@ use Dompdf\Dompdf;
 if (!isset($_GET['usuario'], $_GET['asiento'], $_GET['cine'])) {
     die("Faltan datos para generar el PDF.");
 }
-
+//sanear datos
 $usuario = htmlspecialchars($_GET['usuario']);
 $asiento = htmlspecialchars($_GET['asiento']);
 $cine    = htmlspecialchars($_GET['cine']);
 
-// Ruta del QR temporal generado previamente
-$qr_file = "http://localhost/proyectos/cine/qr_temp.png";
+// Ruta al QR temporal 
+$qr_file = "http://localhost/proyectos/cine/qr_temp.png"; //ruta a la imagen
 
-// Construcción del HTML del PDF
-$qr_base64 = base64_encode(file_get_contents($qr_file));
+// Estructura del PDF y añadimos imagen
+$qr_base64 = base64_encode(file_get_contents($qr_file)); //imagen en base 64
 $html = "
 <h1>Entrada de Cine</h1>
 <p><strong>Usuario:</strong> $usuario</p>
 <p><strong>Asiento:</strong> $asiento</p>
 <p><strong>Cine:</strong> $cine</p>
 <p><strong>Código QR:</strong></p>
-<img src='data:image/png;base64,$qr_base64' style='width:200px;'>
-";
+<img src='data:image/png;base64,$qr_base64' style='width:200px;'>"; //añadimos la imagen al pdf
 
 // Crear PDF
 $dompdf = new Dompdf();

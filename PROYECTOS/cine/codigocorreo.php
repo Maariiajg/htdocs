@@ -10,23 +10,25 @@ if (!isset($_GET['usuario'], $_GET['asiento'], $_GET['cine'], $_SESSION['correo'
     die("Faltan datos para enviar el correo.");
 }
 
+//saneamos el los datos
 $usuario = htmlspecialchars($_GET['usuario']);
 $asiento = htmlspecialchars($_GET['asiento']);
 $cine    = htmlspecialchars($_GET['cine']);
 $correo  = $_SESSION['correo'];
 
-//Generar PDF en memoria (igual que codigopdf.php)
+//Generar PDF para enviarlo por correo 
 $qr_file = 'qr_temp.png';
-$qr_base64 = base64_encode(file_get_contents($qr_file));
+$qr_base64 = base64_encode(file_get_contents($qr_file)); //imagen en base 64
 $html = "
 <h1>Entrada de Cine</h1>
 <p><strong>Usuario:</strong> $usuario</p>
 <p><strong>Asiento:</strong> $asiento</p>
 <p><strong>Cine:</strong> $cine</p>
 <p><strong>Código QR:</strong></p>
-<img src='data:image/png;base64,$qr_base64' style='width:200px;'>
-";
+<img src='data:image/png;base64,$qr_base64' style='width:200px;'>"; //añadir la imagen
 
+
+//generar el PDF
 $dompdf = new Dompdf();
 $dompdf->loadHtml($html);
 $dompdf->setPaper("A4", "portrait");
@@ -42,7 +44,7 @@ $mail = new PHPMailer(true);
 try {
     // Configuración del servidor
     $mail->isSMTP();
-    $mail->Host       = 'smtp.gmail.com'; // Cambia por tu SMTP
+    $mail->Host       = 'smtp.gmail.com'; 
     $mail->SMTPAuth   = true;
     $mail->Username   = 'antonio@gmail.com';
     $mail->Password   = 'erchulo';
