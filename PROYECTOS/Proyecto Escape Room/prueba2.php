@@ -1,7 +1,4 @@
 <?php
-// prueba2.php
-// Prueba 2: la plegaria de la ermita -> completar "El ultimo ___ de ___" (domingo, septiembre)
-
 require_once 'funciones.php';
 
 $prueba = 2;
@@ -13,17 +10,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $_POST = sanitize_input($_POST);
 }
 
-// Si el jugador no ha empezado o no completó la prueba 1, puedes permitir el acceso directo o redirigir.
-// En este ejemplo comprobamos que la prueba1 esté marcada como correcta. Si no, lo remitimos al inicio.
+// Comprobar que se pasó la prueba 1
 if (!isset($_SESSION['prueba1_correcta']) || $_SESSION['prueba1_correcta'] !== true) {
-    // No ha pasado la prueba 1: forzamos volver a index
     header('Location: index.php');
     exit;
-}
-
-// Pista normal
-if (isset($_POST['pedir_pista'])) {
-    $pistaMostrada = obtenerPista($prueba, 'normal', 0);
 }
 
 // Pista extra
@@ -35,13 +25,11 @@ if (isset($_POST['pedir_pista_extra']) && isset($_POST['confirm_extra']) && $_PO
     }
 }
 
-// Procesar respuesta compuesta (dia + mes)
+// Procesar respuesta compuesta (día + mes)
 if (isset($_POST['dia']) && isset($_POST['mes'])) {
-    $dia = $_POST['dia'];
-    $mes = $_POST['mes'];
-
-    // Unificamos el formato: "dia|mes"
-    $entrada = normalizar($dia . '|' . $mes);
+    $dia = strtolower(trim($_POST['dia']));
+    $mes = strtolower(trim($_POST['mes']));
+    $entrada = $dia . '|' . $mes;
 
     global $respuestas_prueba2;
     if (validarRespuesta($entrada, $respuestas_prueba2)) {
@@ -49,9 +37,12 @@ if (isset($_POST['dia']) && isset($_POST['mes'])) {
         header('Location: prueba3.php');
         exit;
     } else {
+        // Decrementa intento
         $intentosRestantes = incrementarIntento($prueba);
         if ($intentosRestantes <= 0) {
-            $mensaje = 'Has agotado los intentos para esta prueba. Pulsa "Volver a empezar".';
+            // Redirige a perdiste.php automáticamente
+            header("Location: perdiste.php");
+            exit;
         } else {
             $mensaje = "Respuesta incorrecta. Intentos restantes: $intentosRestantes";
         }
@@ -69,63 +60,48 @@ if (isset($_POST['dia']) && isset($_POST['mes'])) {
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <link rel="stylesheet" href="estilos.css">
 </head>
-<body class="page">
-    <header class="site-header">
+<body>
+    <header>
         <h1>Prueba 2: La plegaria de la ermita</h1>
-        <a class="btn small" href="index.php?reset=1">Volver a empezar</a>
+        <a class="btn-volver-empezar" href="index.php?reset=1">Volver a empezar</a>
     </header>
 
     <main class="content">
-        <section class="challenge">
-            <p>
-                Tras descifrar el texto de la piedra y decirlo en voz alta, otro rayo atraviesa el cielo y la lluvia cesa.
-                a un lado de la roca ves una estampita de la patrona de Mairena y decides ir a la ermita principal.
-                En la puerta de la ermita cuelga una nota: <em>"La romería en honor a nuestra patrona se celebra el último ___ de ___."</em>
-                Rellena ambos espacios (día y mes).
-            </p>
+        <p>
+            Tras descifrar el texto de la piedra y decirlo en voz alta, otro rayo atraviesa el cielo y la lluvia cesa.
+            a un lado de la roca ves una estampita de la patrona de Mairena y decides ir a la ermita principal.
+            En la puerta de la ermita cuelga una nota: <em>"La romería en honor a nuestra patrona se celebra el último ___ de ___."</em>
+            Rellena ambos espacios (día y mes).
+        </p>
 
-            <figure>
-                <img src="imagenes/img-prueba2.jpg" alt="Ermita (placeholder)" class="img-ermita">
-            </figure>
+        <figure>
+            <img src="imagenes/img-prueba2.jpg" alt="Ermita (placeholder)" class="img-ermita">
+        </figure>
 
-            <?php if ($mensaje): ?>
-                <div class="message warning"><?php echo htmlspecialchars($mensaje); ?></div>
-            <?php endif; ?>
+        <!--Muestra intentos restantes-->
+        <p class="info">Intentos restantes: <?php echo getIntentosRestantes($prueba); ?></p>
 
-            <?php if ($pistaMostrada): ?>
-                <div class="message hint">Pista: <?php echo htmlspecialchars($pistaMostrada); ?></div>
-            <?php endif; ?>
+        <!--Muestra pista-->
+        <p class="pista">Pista: <?php echo htmlspecialchars($pistaMostrada); ?></p>
 
-            <form method="post" action="prueba2.php" class="form-challenge">
-                <label for="dia">Día:</label>
-                <input id="dia" name="dia" type="text" required maxlength="50">
+        <form method="post" action="prueba2.php" class="form-challenge">
+            <label for="dia">Día:</label>
+            <input id="dia" name="dia" type="text" required maxlength="50">
 
-                <label for="mes">Mes:</label>
-                <input id="mes" name="mes" type="text" required maxlength="50">
+            <label for="mes">Mes:</label>
+            <input id="mes" name="mes" type="text" required maxlength="50">
 
-                <div class="form-actions">
-                    <button type="submit" class="btn primary">Enviar</button>
-                </div>
+            <div class="btn">
+                <button type="submit" class="btn primary">Enviar</button>
+            </div>
 
-                <div class="pista-actions"> 
-                    <input type="hidden" id="confirm_extra" name="confirm_extra" value="0">
-                    <button type="button" id="btnPistaExtra" class="btn danger">Pedir pista extra (1 disponible)</button>
-                    <input type="hidden" name="pedir_pista_extra" value="1">
-                </div>
-            </form>
-
-            <p class="info">Intentos restantes: <?php echo getIntentosRestantes($prueba); ?></p>
-        </section>
+            <div class="pista-actions"> 
+                <input type="hidden" id="confirm_extra" name="confirm_extra" value="0">
+                <button type="button" id="btnPistaExtra" class="btn danger">Pedir pista extra (1 disponible)</button>
+            </div>
+        </form>
     </main>
 
     <script src="interactividad.js"></script>
-    <script>
-        document.getElementById('btnPistaExtra').addEventListener('click', function(){
-            if (confirm('¿Confirmas gastar la pista extra? (Solo 1 por prueba)')) {
-                document.getElementById('confirm_extra').value = '1';
-                this.closest('form').submit();
-            }
-        });
-    </script>
 </body>
 </html>

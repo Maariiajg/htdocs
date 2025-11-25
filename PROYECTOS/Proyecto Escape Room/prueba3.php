@@ -1,7 +1,4 @@
 <?php
-// prueba3.php
-// Prueba 3: La Feria y el escudo perdido -> escribir el apellido histórico (LUNA / variantes)
-
 require_once 'funciones.php';
 
 $prueba = 3;
@@ -19,11 +16,6 @@ if (!isset($_SESSION['prueba2_correcta']) || $_SESSION['prueba2_correcta'] !== t
     exit;
 }
 
-// Pista normal
-if (isset($_POST['pedir_pista'])) {
-    $pistaMostrada = obtenerPista($prueba, 'normal', 0);
-}
-
 // Pista extra
 if (isset($_POST['pedir_pista_extra']) && isset($_POST['confirm_extra']) && $_POST['confirm_extra'] === '1') {
     if (consumirPistaExtra($prueba)) {
@@ -33,20 +25,23 @@ if (isset($_POST['pedir_pista_extra']) && isset($_POST['confirm_extra']) && $_PO
     }
 }
 
-// Procesar respuesta
-if (isset($_POST['respuesta3'])) {
-    $respuesta = $_POST['respuesta3'];
+// Procesar respuesta compuesta (año + fundador)
+if (isset($_POST['anio']) && isset($_POST['fundador'])) {
+    $anio = strtolower(trim($_POST['anio']));
+    $fundador = strtolower(trim($_POST['fundador']));
+
+    $entrada = $anio . '|' . $fundador;
 
     global $respuestas_prueba3;
-    if (validarRespuesta($respuesta, $respuestas_prueba3)) {
+    if (validarRespuesta($entrada, $respuestas_prueba3)) {
         marcarCorrecta($prueba);
-        // Todo correcto: ir a final
         header('Location: final.php');
         exit;
     } else {
         $intentosRestantes = incrementarIntento($prueba);
         if ($intentosRestantes <= 0) {
-            $mensaje = 'Has agotado los intentos para esta prueba. Pulsa "Volver a empezar".';
+            header("Location: perdiste.php");
+            exit;
         } else {
             $mensaje = "Respuesta incorrecta. Intentos restantes: $intentosRestantes";
         }
@@ -54,7 +49,6 @@ if (isset($_POST['respuesta3'])) {
 } else {
     $intentosRestantes = getIntentosRestantes($prueba);
 }
-
 ?>
 <!doctype html>
 <html lang="es">
@@ -64,62 +58,52 @@ if (isset($_POST['respuesta3'])) {
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <link rel="stylesheet" href="estilos.css">
 </head>
-<body class="page">
-    <header class="site-header">
+<body>
+    <header>
         <h1>Prueba 3: La Feria y el escudo perdido</h1>
-        <a class="btn small" href="index.php?reset=1">Volver a empezar</a>
+        <a class="btn-volver-empezar" href="index.php?reset=1">Volver a empezar</a>    
     </header>
 
-    <main class="content">
-        <section class="challenge">
-            <p>
-                Otro rayo atraviesa el cielo, tras el resplandor ves como las nubes y la oscuridad sedisipan levemente, sabes que estás restaurando a historia de mairena, estás a punto de salvarla.
-                Entras a la hermita a buscar alguna otra pista pero está completamente vacía, salvo un clavel rojo colocado cuidadosamente en el centro de la ermita. En ese momento recuerdas la principal fiesta del pueblo y decides dirigirte a toda prisa al recinto ferial.
-                Al llegar lo encuentras desierto, caminando por sus calles llegas al caballo, en la valla que lo protege ves un trozo de pergamino con el siguiente texto:
-                <em>"Con mas de 500 años, la feria de mairena se convierte en la mas antigua de Andalucía, comenzó como feria de ganado, concedida por el padre de Isabel la Católica".</em>
-                Di el año y fundador de esta feria q ha pasado a ser una gran festividad del pueblo. (respuestas año: 1441 y fundador: Juan II de Castilla)
-            </p>
+    <main>
+        
+        <p>
+            Otro rayo atraviesa el cielo, tras el resplandor ves como las nubes y la oscuridad sedisipan levemente, sabes que estás restaurando a historia de mairena, estás a punto de salvarla.
+            Entras a la hermita a buscar alguna otra pista pero está completamente vacía, salvo un clavel rojo colocado cuidadosamente en el centro de la ermita. En ese momento recuerdas la principal fiesta del pueblo y decides dirigirte a toda prisa al recinto ferial.
+            Al llegar lo encuentras desierto, caminando por sus calles llegas al caballo, en la valla que lo protege ves un trozo de pergamino con el siguiente texto:
+            <em>"Con mas de 500 años, la feria de mairena se convierte en la mas antigua de Andalucía, comenzó como feria de ganado, concedida por el padre de Isabel la Católica".</em>
+            Di el año y fundador de esta feria que ha pasado a ser una gran festividad del pueblo. (respuestas: año 1441 y fundador Juan II de Castilla)
+        </p>
 
-            <figure>
-                <img src="imagenes/img-prueba3.jpg" alt="Recinto ferial (placeholder)" class="img-feria">
-            </figure>
+        
+        <img src="imagenes/img-prueba3.jpg" alt="Recinto ferial (placeholder)">
+        
 
-            <?php if ($mensaje): ?>
-                <div class="message warning"><?php echo htmlspecialchars($mensaje); ?></div>
-            <?php endif; ?>
+        <!--Muestra intentos restantes-->
+        <p class="info">Intentos restantes: <?php echo getIntentosRestantes($prueba); ?></p>
 
-            <?php if ($pistaMostrada): ?>
-                <div class="message hint">Pista: <?php echo htmlspecialchars($pistaMostrada); ?></div>
-            <?php endif; ?>
+        <!--Muestra pista-->
+        <p class="pista">Pista: <?php echo htmlspecialchars($pistaMostrada); ?></p>
 
-            <form method="post" action="prueba3.php" class="form-challenge">
-                <label for="respuesta3">Escribe el apellido histórico:</label>
-                <input id="respuesta3" name="respuesta3" type="text" required maxlength="100">
+        <form method="post" action="prueba3.php">
+            <label for="anio">Año:</label>
+            <input id="anio" name="anio" type="text" required maxlength="10">
 
-                <div class="form-actions">
-                    <button type="submit" class="btn primary">Enviar</button>
-                </div>
+            <label for="fundador">Fundador:</label>
+            <input id="fundador" name="fundador" type="text" required maxlength="100">
 
-                <div class="pista-actions">
-                    <button name="pedir_pista" class="btn" type="submit" value="1">Pedir pista</button>
-                    <input type="hidden" id="confirm_extra" name="confirm_extra" value="0">
-                    <button type="button" id="btnPistaExtra" class="btn danger">Pedir pista extra (1 disponible)</button>
-                    <input type="hidden" name="pedir_pista_extra" value="1">
-                </div>
-            </form>
+            <div class="btn">
+                <button type="submit" class="btn primary">Enviar</button>
+            </div>
 
-            <p class="info">Intentos restantes: <?php echo getIntentosRestantes($prueba); ?></p>
-        </section>
+            <div class="pista-actions">
+                <input type="hidden" id="confirm_extra" name="confirm_extra" value="0">
+                <button type="button" id="btnPistaExtra">Pedir pista extra (1 disponible)</button>
+            </div>
+        </form>
+
+        
     </main>
 
     <script src="interactividad.js"></script>
-    <script>
-        document.getElementById('btnPistaExtra').addEventListener('click', function(){
-            if (confirm('¿Confirmas gastar la pista extra? (Solo 1 por prueba)')) {
-                document.getElementById('confirm_extra').value = '1';
-                this.closest('form').submit();
-            }
-        });
-    </script>
 </body>
 </html>

@@ -1,6 +1,4 @@
 <?php
-// Funciones reutilizables para todo el Escape Room
-
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
@@ -12,67 +10,103 @@ $respuestasAceptadas = [
     $respuestas_prueba3 = ['1441|Juan II de Castilla']
 ];
 
-
-// Pista por prueba
+// Pistas
 $pistas = [
     1 => ['extra' => ['Es una palabra corta de cuatro letras: L _ _ _.']],
-    2 => ['extra' => ['Piensa: el mes que sigue al verano y antes de octubre (septiembre).']],
-    3 => ['extra' => ['Empieza por L y termina por A. Es el apellido que figura en el escudo.']]
+    2 => ['extra' => ['Piensa: el mes que sigue al verano y antes de octubre.']],
+    3 => ['extra' => ['El año tiene 2 numeros repetidos, y el fundador fue ______ de Castilla']]
 ];
 
-// Inicializar sesion
+// Inicializar variables de sesión
 for ($p = 1; $p <= 3; $p++) {
-    if (!isset($_SESSION["prueba{$p}_attempts"])) $_SESSION["prueba{$p}_attempts"] = 4;  //intentos iniciales 4
-    if (!isset($_SESSION["prueba{$p}_pista_extra_usada"])) $_SESSION["prueba{$p}_pista_extra_usada"] = false; //al principio no está usada la pista extra
-    if (!isset($_SESSION["prueba{$p}_correcta"])) $_SESSION["prueba{$p}_correcta"] = false; //al principio la prueba no es correcta
+    if (!isset($_SESSION["prueba{$p}_attempts"])) $_SESSION["prueba{$p}_attempts"] = 4;
+    if (!isset($_SESSION["prueba{$p}_pista_extra_usada"])) $_SESSION["prueba{$p}_pista_extra_usada"] = false;
+    if (!isset($_SESSION["prueba{$p}_correcta"])) $_SESSION["prueba{$p}_correcta"] = false;
 }
 
-// Valida la respuesta del usuario contra un array de las respuestas aceptadas
+// -----------------------------------------
+// VALIDAR RESPUESTA
+// -----------------------------------------
 function validarRespuesta($input, $respuestasAceptadas) {
+    $input = mb_strtolower(trim($input));
+
     foreach ($respuestasAceptadas as $aceptada) {
+
+        // Caso múltiple (palabras separadas por "|")
         if (strpos($aceptada, '|') !== false) {
-            //validar que la respuesta que hemos dado en la pruba es igual a la que tenemos en el array de respuestasAceptadas
-        } else {
-           
+            $partes = explode('|', $aceptada);
+            $valida = true;
+
+            foreach ($partes as $parte) {
+                $parte = mb_strtolower(trim($parte));
+                if (strpos($input, $parte) === false) {
+                    $valida = false;
+                    break;
+                }
+            }
+
+            if ($valida) return true;
+        }
+
+        // Caso simple
+        else {
+            $aceptada = mb_strtolower(trim($aceptada));
+            if ($input === $aceptada) return true;
         }
     }
+
     return false;
 }
 
-// Devuelve pista extra para la prueba en la que estemos
-function obtenerPistaExtra($prueba, $tipo='extra', $indice=0) {
+// -----------------------------------------
+// PISTAS
+// -----------------------------------------
+function obtenerPista($prueba, $tipo='extra', $indice=0) {
     global $pistas;
-    if (!isset($pistas[$prueba][$tipo][$indice])) return 'No hay más pistas de este tipo.';
+    if (!isset($pistas[$prueba][$tipo][$indice])) {
+        return 'No hay más pistas de este tipo.';
+    }
     return $pistas[$prueba][$tipo][$indice];
 }
 
-// Marca pista extra como usada
 function consumirPistaExtra($prueba) {
     $key = "prueba{$prueba}_pista_extra_usada";
-    if ($_SESSION[$key] === true){ //no está usada
-        $_SESSION[$key] = true; //ahora si
+
+    if ($_SESSION[$key] === false) {
+        $_SESSION[$key] = true;
+        return true;
     }
-    return true;
+
+    return false;
 }
 
-// Decrementa un intento de la prueba
+// -----------------------------------------
+// INTENTOS
+// -----------------------------------------
+function incrementarIntento($prueba) {
+    return decrementarIntento($prueba);
+}
+
 function decrementarIntento($prueba) {
     $key = "prueba{$prueba}_attempts";
     if ($_SESSION[$key] > 0) $_SESSION[$key]--;
     return $_SESSION[$key];
 }
 
-// Devuelve intentos restantes
 function getIntentosRestantes($prueba) {
     return $_SESSION["prueba{$prueba}_attempts"];
 }
 
-// Marca la prueba como correcta
+// -----------------------------------------
+// MARCAR PRUEBA CORRECTA
+// -----------------------------------------
 function marcarCorrecta($prueba) {
     $_SESSION["prueba{$prueba}_correcta"] = true;
 }
 
-// Limpieza de inputs para evitar XSS
+// -----------------------------------------
+// SANEAR INPUT
+// -----------------------------------------
 function sanitize_input($data) {
     if (is_array($data)) {
         foreach ($data as $k => $v) $data[$k] = sanitize_input($v);
@@ -80,4 +114,29 @@ function sanitize_input($data) {
     }
     return htmlspecialchars(stripslashes(trim($data)), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 }
+
+// ---------------------------------------------------------
+// RESETEAR TODO EL ESTADO DEL ESCAPE ROOM
+// ---------------------------------------------------------
+function resetearEstado() {
+
+    // Elimina TODAS las variables de sesión del escape room
+    for ($p = 1; $p <= 3; $p++) {
+        unset($_SESSION["prueba{$p}_attempts"]);
+        unset($_SESSION["prueba{$p}_pista_extra_usada"]);
+        unset($_SESSION["prueba{$p}_correcta"]);
+    }
+
+    unset($_SESSION["started"]);
+
+    // Reinicializamos el sistema igual que al principio
+    for ($p = 1; $p <= 3; $p++) {
+        $_SESSION["prueba{$p}_attempts"] = 4;
+        $_SESSION["prueba{$p}_pista_extra_usada"] = false;
+        $_SESSION["prueba{$p}_correcta"] = false;
+    }
+
+    $_SESSION["started"] = false;
+}
+
 ?>

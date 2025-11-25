@@ -26,23 +26,23 @@ if (!isset($_SESSION['started'])) {
 </head>
 <body>
     <header>
-        <h1 class="title">El misterio del Castillo de Luna</h1>
+        <h1>El misterio del Castillo de Luna</h1>
         <h2>Un Escape Room educativo sobre el patrimonio de Mairena del Alcor</h2>
     </header>
 
-    <main class="content">
-        <section class="intro">
-            <img src="imagenes/castillo-de-luna.jpg" alt="Castillo de Luna" class="hero">
-            <p>
-                Noche de tormenta sobre los Alcores. Un rayo iluminó el castillo y tras un rayo atronador miras al suelo y
-                encuentras a tus pies un pergamino rasgado, muestra una imagen del castillo del pueblo y una series de letras cada vez mas borrosas 
-                que desaparecen por momentos. ¡La historia de Mairena se está desvaneciendo y debes salvarla!
-            </p>
+    <main>
+        
+        <img src="imagenes/castillo-de-luna.jpg" alt="Castillo de Luna" class="hero">
+        <p>
+            Noche de tormenta sobre los Alcores. Un rayo iluminó el castillo y tras un rayo atronador miras al suelo y
+            encuentras a tus pies un pergamino rasgado, muestra una imagen del castillo del pueblo y una series de letras cada vez mas borrosas 
+            que desaparecen por momentos. ¡La historia de Mairena se está desvaneciendo y debes salvarla!
+        </p>
 
-            <form action="prueba1.php" method="get">
-                <button type="submit" class="boton principales">Comenzar la aventura</button>
-            </form>
-        </section>
+        <form action="prueba1.php" method="get">
+            <button type="submit" class="boton principales">Comenzar la aventura</button>
+        </form>
+        
     </main>
 
     <script src="interactividad.js"></script>

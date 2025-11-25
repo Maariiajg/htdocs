@@ -1,210 +1,175 @@
-/* ==========================================================================
-Tema: Pergamino / Castillo
-Tipografía sencilla, colores crema y marrones,
-botones con efecto tipo "bisel". Responsive básico.
-========================================================================== */
+/* ==========================
+   Estilos Globales Escape Room
+   Colores principales: azul #005BAC y naranja #FF6A00
+   ========================== */
 
-/* ------------------------------
-Reseteo ligero
---------------------------------*/
-
+/* Reset básico */
 * {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: "Helvetica Neue", Arial, sans-serif;
-  }
-
-body.page {
-background: #f7efe2;
-color: #2b2b2b;
-line-height: 1.5;
-padding: 16px;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
 }
 
-/* ------------------------------
-Encabezado del sitio
---------------------------------*/
-.site-header {
-display: flex;
-align-items: center;
-justify-content: space-between;
-gap: 12px;
-margin-bottom: 18px;
+/* Body general */
+body {
+    background-color: #f5f5f5;
+    color: #333;
+    line-height: 1.6;
+    min-height: 100vh;
 }
 
-.title {
-font-family: Georgia, "Times New Roman", serif;
-font-size: 28px;
-color: #3b2f2f;
+/* Encabezados */
+header {
+    text-align: center;
+    padding: 2rem 1rem;
+    background-color: #005BAC; /* azul */
+    color: #fff;
 }
 
-.subtitle {
-font-size: 14px;
-color: #5c4b4b;
+header h1 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
 }
 
-/* ------------------------------
-Imagen destacada
---------------------------------*/
-.hero {
-width: 100%;
-max-width: 800px;
-display: block;
-margin: 12px 0;
-border-radius: 8px;
+header h2 {
+    font-size: 1.2rem;
+    font-weight: normal;
 }
 
-/* ------------------------------
-Contenedor principal
---------------------------------*/
-.content {
-max-width: 900px;
-margin: 0 auto;
-background: rgba(255, 255, 255, 0.6);
-padding: 18px;
-border-radius: 8px;
-box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04);
+/* Main content */
+main {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 0 1rem;
 }
 
-/* ------------------------------
-Títulos y textos
---------------------------------*/
-h1 {
-font-family: Georgia, "Times New Roman", serif;
-color: #2d2222;
-margin-bottom: 8px;
+/* Imágenes */
+img.hero, img.img-inscription, img.img-ermita, img.img-feria {
+    display: block;
+    max-width: 100%;
+    margin: 1rem auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
 
-p {
-margin-bottom: 12px;
+/* Formularios */
+form {
+    margin-top: 1.5rem;
 }
 
-/* ------------------------------
-Formulario de desafío
---------------------------------*/
-.form-challenge {
-display: flex;
-flex-direction: column;
-gap: 10px;
-margin-top: 12px;
+form label {
+    display: block;
+    margin-bottom: 0.3rem;
+    font-weight: bold;
 }
 
-.form-challenge label {
-font-weight: 600;
+form input[type="text"] {
+    width: 100%;
+    padding: 0.6rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
 }
 
-.form-challenge input[type="text"] {
-padding: 8px 10px;
-border: 1px solid #cbbfaf;
-border-radius: 6px;
-width: 100%;
-font-size: 16px;
-}
-
-/* ------------------------------
-Botones
---------------------------------*/
+/* Botones */
 .boton {
-display: inline-block;
-padding: 8px 14px;
-border-radius: 8px;
-border: 0;
-cursor: pointer;
-background: #e6d7b8;
-color: #2b2b2b;
-font-weight: 600;
-box-shadow: inset -3px -3px 6px rgba(0, 0, 0, 0.03);
-transition: transform 0.1s ease-in-out;
+    display: inline-block;
+    padding: 0.7rem 1.5rem;
+    font-size: 1rem;
+    font-weight: bold;
+    text-decoration: none;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.2s;
 }
 
-.boton .principales {
-background: #cfa66e;
-color: #fff;
+.boton.principales {
+    background-color: #005BAC; /* azul principal */
+    color: #fff;
 }
 
+.boton.principales:hover {
+    background-color: #004080;
+}
 
-/* ------------------------------
-Mensajes
---------------------------------*/
+.boton.secondary {
+    background-color: #FF6A00; /* naranja */
+    color: #fff;
+}
+
+.boton.secondary:hover {
+    background-color: #cc5500;
+}
+
+/* Mensajes */
 .message {
-padding: 10px 12px;
-border-radius: 8px;
-margin: 8px 0;
-}
-
-.message.hint {
-background: #fff8e6;
-border: 1px solid #ffe9b8;
+    padding: 0.8rem 1rem;
+    border-radius: 5px;
+    margin-bottom: 1rem;
 }
 
 .message.warning {
-background: #ffecec;
-border: 1px solid #ffd6d6;
+    background-color: #FFE0B2;
+    color: #8a4b00;
 }
 
-/* ------------------------------
-Imágenes de prueba
---------------------------------*/
-.img-inscription {
-width: 70%;
-max-width: 480px;
-display: block;
-margin: 8px 0;
+.message.hint {
+    background-color: #D0F0FF;
+    color: #005BAC;
 }
 
-.img-ermita,
-.img-feria {
-width: 100%;
-max-width: 700px;
-display: block;
-margin: 8px 0;
-border-radius: 6px;
+/* Pistas */
+.pista {
+    font-style: italic;
+    margin: 0.5rem 0;
+    color: #FF6A00;
 }
 
-/* ------------------------------
-Información / Nota
---------------------------------*/
+/* Información de intentos */
 .info {
-margin-top: 8px;
-font-size: 14px;
-color: #5b5b5b;
+    margin: 0.5rem 0;
+    font-weight: bold;
 }
 
-/* ------------------------------
-Página final
---------------------------------*/
-.final-page .celebration {
-background: linear-gradient(180deg, #fff7e6, #fff);
-padding: 20px;
-border-radius: 8px;
-margin-bottom: 12px;
+/* Acciones de pista */
+.pista-actions {
+    margin-top: 0.5rem;
 }
 
-/* ------------------------------
-Responsive
---------------------------------*/
-@media (max-width: 600px) {
-.site-header {
-flex-direction: column;
-align-items: flex-start;
-gap: 8px;
+.pista-actions button {
+    background-color: #FF6A00; /* naranja */
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
-.hero {
-max-width: 100%;
-}
-}
-
-/* ------------------------------
-Modo de alto contraste
---------------------------------
-.high-contrast {
-background: #1b1b1b !important;
-color: #f2f2f2 !important;
+.pista-actions button:hover {
+    background-color: #cc5500;
 }
 
-.high-contrast .btn {
-background: #333 !important;
-color: #fff !important;
-}*/
+/* Enlaces "Volver a empezar" */
+a.btn-volver-empezar {
+    display: inline-block;
+    margin-top: 0.5rem;
+    padding: 0.5rem 1rem;
+    background-color: #FF6A00;
+    color: #fff;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a.btn-volver-empezar:hover {
+    background-color: #cc5500;
+}
+
+/* Final y perdiste */
+main a.boton {
+    margin: 0.5rem;
+}
+
