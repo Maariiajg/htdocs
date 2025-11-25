@@ -10,6 +10,7 @@ $usuario = htmlspecialchars($_GET['usuario']);
 $asiento = htmlspecialchars($_GET['asiento']);
 $cine    = htmlspecialchars($_GET['cine']);
 
+//http://localhost/proyectos/cine/entrada.php?usuario=Antonio&asiento=1&cine=los_arcos
 // requisitos para que sea valido
 $validaciones = [
     "Antonio" => ["asiento" => 1, "cine" => "los_arcos"],

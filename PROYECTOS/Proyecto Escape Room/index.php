@@ -1,9 +1,4 @@
 <?php
-// index.php
-// Página de inicio del Escape Room "El misterio del Castillo de Luna"
-// Muestra la introducción y permite iniciar la partida.
-// Recomendación: ejecutar con un servidor PHP local: php -S localhost:8000
-
 session_start();
 // Reiniciar la sesión / estado si se pulsa "Volver a empezar" desde cualquier página
 if (isset($_GET['reset']) && $_GET['reset'] == '1') {
@@ -29,21 +24,17 @@ if (!isset($_SESSION['started'])) {
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <link rel="stylesheet" href="estilos.css">
 </head>
-<body class="page">
-    <header class="site-header">
+<body>
+    <header>
         <h1 class="title">El misterio del Castillo de Luna</h1>
-        <p class="subtitle">Un Escape Room educativo sobre el patrimonio de Mairena del Alcor</p>
-        <div class="controls">
-            
-            <a class="btn small" href="index.php?reset=1">Volver a empezar</a>
-        </div>
+        <h2>Un Escape Room educativo sobre el patrimonio de Mairena del Alcor</h2>
     </header>
 
     <main class="content">
         <section class="intro">
-            <img src="imagenes/castillo-de-luna.jpg" alt="Castillo de Luna (placeholder)" class="hero">
+            <img src="imagenes/castillo-de-luna.jpg" alt="Castillo de Luna" class="hero">
             <p>
-                Noche de tormenta sobre los Alcores. Un rayo iluminó el castillo y, al segundo parpadear,
+                Noche de tormenta sobre los Alcores. Un rayo iluminó el castillo y
                 encontraste a tus pies un pergamino rasgado: alguien intentó borrar la historia.
                 Eres alumno del archivo municipal y debes recomponer el pergamino antes de que el reloj de la torre marque la medianoche.
                 Tres secretos te esperan dentro del Castillo de Luna y en otros lugares emblemáticos del pueblo.

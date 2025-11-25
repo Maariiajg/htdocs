@@ -31,9 +31,12 @@ $cine = htmlspecialchars($_COOKIE['cine']);
     <h3>Seleccione su asiento:</h3>
 
     <table border="1">
+        <th colspan="2">Asientos</th>
         <tr>
             <td><a href="codigo.php?asiento=1">1</a></td>
             <td><a href="codigo.php?asiento=2">2</a></td>
+        </tr>
+        <tr>
             <td><a href="codigo.php?asiento=3">3</a></td>
             <td><a href="codigo.php?asiento=4">4</a></td>
         </tr>
