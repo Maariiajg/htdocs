@@ -24,9 +24,8 @@ for ($p = 1; $p <= 3; $p++) {
     if (!isset($_SESSION["prueba{$p}_correcta"])) $_SESSION["prueba{$p}_correcta"] = false;
 }
 
-// -----------------------------------------
 // VALIDAR RESPUESTA
-// -----------------------------------------
+
 function validarRespuesta($input, $respuestasAceptadas) {
     $input = mb_strtolower(trim($input));
 
@@ -58,9 +57,8 @@ function validarRespuesta($input, $respuestasAceptadas) {
     return false;
 }
 
-// -----------------------------------------
 // PISTAS
-// -----------------------------------------
+
 function obtenerPista($prueba, $tipo='extra', $indice=0) {
     global $pistas;
     if (!isset($pistas[$prueba][$tipo][$indice])) {
@@ -80,13 +78,8 @@ function consumirPistaExtra($prueba) {
     return false;
 }
 
-// -----------------------------------------
-// INTENTOS
-// -----------------------------------------
-function incrementarIntento($prueba) {
-    return decrementarIntento($prueba);
-}
 
+// INTENTOS
 function decrementarIntento($prueba) {
     $key = "prueba{$prueba}_attempts";
     if ($_SESSION[$key] > 0) $_SESSION[$key]--;
@@ -97,16 +90,16 @@ function getIntentosRestantes($prueba) {
     return $_SESSION["prueba{$prueba}_attempts"];
 }
 
-// -----------------------------------------
+
 // MARCAR PRUEBA CORRECTA
-// -----------------------------------------
+
 function marcarCorrecta($prueba) {
     $_SESSION["prueba{$prueba}_correcta"] = true;
 }
 
-// -----------------------------------------
+
 // SANEAR INPUT
-// -----------------------------------------
+
 function sanitize_input($data) {
     if (is_array($data)) {
         foreach ($data as $k => $v) $data[$k] = sanitize_input($v);
@@ -115,9 +108,9 @@ function sanitize_input($data) {
     return htmlspecialchars(stripslashes(trim($data)), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 }
 
-// ---------------------------------------------------------
+
 // RESETEAR TODO EL ESTADO DEL ESCAPE ROOM
-// ---------------------------------------------------------
+
 function resetearEstado() {
 
     // Elimina TODAS las variables de sesión del escape room

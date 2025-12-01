@@ -1,175 +1,146 @@
-/* ==========================
-   Estilos Globales Escape Room
-   Colores principales: azul #005BAC y naranja #FF6A00
-   ========================== */
-
-/* Reset básico */
-* {
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f4f4f4;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-    font-family: 'Arial', sans-serif;
+    color: #222;
 }
 
-/* Body general */
-body {
-    background-color: #f5f5f5;
-    color: #333;
-    line-height: 1.6;
-    min-height: 100vh;
-}
-
-/* Encabezados */
 header {
+    background-color: #004A99; 
+    color: white;
+    padding: 15px;
     text-align: center;
-    padding: 2rem 1rem;
-    background-color: #005BAC; /* azul */
-    color: #fff;
 }
 
-header h1 {
-    font-size: 2rem;
-    margin-bottom: 0.5rem;
+h1 {
+    margin: 0;
 }
 
-header h2 {
-    font-size: 1.2rem;
-    font-weight: normal;
-}
-
-/* Main content */
-main {
+/* Contenedor principal */
+.content, main {
     max-width: 900px;
-    margin: 2rem auto;
-    padding: 0 1rem;
-}
-
-/* Imágenes */
-img.hero, img.img-inscription, img.img-ermita, img.img-feria {
-    display: block;
-    max-width: 100%;
-    margin: 1rem auto;
+    background-color: white;
+    margin: 20px auto;
+    padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    border: solid 1px #ccc;
 }
 
-/* Formularios */
-form {
-    margin-top: 1.5rem;
-}
+/*IMÁGENES*/
 
-form label {
+img {
+    width: 100%;
+    max-width: 600px;
     display: block;
-    margin-bottom: 0.3rem;
+    margin: 15px auto;
+    border-radius: 6px;
+    border: 2px solid #004A99;
+}
+
+/*TEXTOS DE INFO, MENSAJES Y PISTAS*/
+
+.info {
+    font-weight: bold;
+    color: #004A99; 
+    margin-top: 10px;
+}
+
+.mensaje {
+    color: #b30000;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.pista {
+    background-color: #FFF3CD;
+    border: 1px solid #F28C28;
+    padding: 10px;
+    border-radius: 4px;
+    margin: 10px 0;
+    color: #654321;
+}
+
+/*FORMULARIOS*/
+
+form {
+    margin-top: 20px;
+}
+
+label {
+    display: block;
+    margin-top: 15px;
     font-weight: bold;
 }
 
-form input[type="text"] {
+input[type="text"] {
     width: 100%;
-    padding: 0.6rem;
-    margin-bottom: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 1rem;
+    padding: 10px;
+    border: 1px solid #999;
+    border-radius: 4px;
+    margin-top: 5px;
+    font-size: 16px;
 }
 
-/* Botones */
+/*BOTONES*/
+
+.btn {
+    padding: 10px 18px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* Botón principal */
+.primary {
+    background-color: #004A99;
+    color: white;
+}
+
+
+/* Botón pista extra */
+.danger {
+    background-color: #b30000;
+    color: white;
+}
+
+
+/* Botón de volver a empezar */
+.btn-volver-empezar {
+    background-color: #F28C28;
+    padding: 10px 14px;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    float: right;
+}
+
+
+/* Espacio para los botones de pistas */
+.pista-actions {
+    margin-top: 15px;
+}
+
+/* --------------------------------------------------
+   BOTONES DE FINAL Y PERDISTE
+-------------------------------------------------- */
+
 .boton {
     display: inline-block;
-    padding: 0.7rem 1.5rem;
-    font-size: 1rem;
-    font-weight: bold;
+    padding: 12px 18px;
+    background-color: #004A99;
+    color: white;
     text-decoration: none;
-    border: none;
     border-radius: 6px;
-    cursor: pointer;
-    transition: 0.2s;
+    margin: 10px;
 }
 
-.boton.principales {
-    background-color: #005BAC; /* azul principal */
-    color: #fff;
+
+.principales {
+    background-color: #F28C28;
 }
 
-.boton.principales:hover {
-    background-color: #004080;
-}
 
-.boton.secondary {
-    background-color: #FF6A00; /* naranja */
-    color: #fff;
-}
 
-.boton.secondary:hover {
-    background-color: #cc5500;
-}
-
-/* Mensajes */
-.message {
-    padding: 0.8rem 1rem;
-    border-radius: 5px;
-    margin-bottom: 1rem;
-}
-
-.message.warning {
-    background-color: #FFE0B2;
-    color: #8a4b00;
-}
-
-.message.hint {
-    background-color: #D0F0FF;
-    color: #005BAC;
-}
-
-/* Pistas */
-.pista {
-    font-style: italic;
-    margin: 0.5rem 0;
-    color: #FF6A00;
-}
-
-/* Información de intentos */
-.info {
-    margin: 0.5rem 0;
-    font-weight: bold;
-}
-
-/* Acciones de pista */
-.pista-actions {
-    margin-top: 0.5rem;
-}
-
-.pista-actions button {
-    background-color: #FF6A00; /* naranja */
-    color: #fff;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.pista-actions button:hover {
-    background-color: #cc5500;
-}
-
-/* Enlaces "Volver a empezar" */
-a.btn-volver-empezar {
-    display: inline-block;
-    margin-top: 0.5rem;
-    padding: 0.5rem 1rem;
-    background-color: #FF6A00;
-    color: #fff;
-    border-radius: 5px;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-a.btn-volver-empezar:hover {
-    background-color: #cc5500;
-}
-
-/* Final y perdiste */
-main a.boton {
-    margin: 0.5rem;
-}
 

@@ -2,17 +2,16 @@
 require_once 'funciones.php';
 
 $prueba = 1;
+$mensaje = '';
+$pistaMostrada = '';
 
-// Sanitizar entrada si viene por POST
+// Sanitizar POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $_POST = sanitize_input($_POST);
 }
 
-$mensaje = '';
-$pistaMostrada = '';
-
-// Si se solicitó pista extra
-if (isset($_POST['pedir_pista_extra']) && isset($_POST['confirm_extra']) && $_POST['confirm_extra'] === '1') {
+// Pista extra
+if (isset($_POST['pedir_pista_extra']) && $_POST['confirm_extra'] === '1') {
     if (consumirPistaExtra($prueba)) {
         $pistaMostrada = obtenerPista($prueba, 'extra', 0);
     } else {
@@ -20,19 +19,18 @@ if (isset($_POST['pedir_pista_extra']) && isset($_POST['confirm_extra']) && $_PO
     }
 }
 
-// Procesar respuesta
-if (isset($_POST['respuesta1'])) {
-    $respuesta = $_POST['respuesta1'];
+// Procesar respuesta simple
+if (isset($_POST['respuesta'])) {
 
+    $entrada = strtolower(trim($_POST['respuesta']));
     global $respuestas_prueba1;
 
-    if (validarRespuesta($respuesta, $respuestas_prueba1)) {
+    if (validarRespuesta($entrada, $respuestas_prueba1)) {
         marcarCorrecta($prueba);
-        $_SESSION['started'] = true;
         header('Location: prueba2.php');
         exit;
     } else {
-        $intentosRestantes = incrementarIntento($prueba);
+        $intentosRestantes = decrementarIntento($prueba);
         if ($intentosRestantes <= 0) {
             header("Location: perdiste.php");
             exit;
@@ -44,54 +42,50 @@ if (isset($_POST['respuesta1'])) {
     $intentosRestantes = getIntentosRestantes($prueba);
 }
 ?>
-<!DOCTYPE html> 
+<!doctype html>
 <html lang="es">
 <head>
     <meta charset="utf-8" />
     <title>Prueba 1 — El misterio del Castillo de Luna</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
     <link rel="stylesheet" href="estilos.css">
 </head>
 <body>
-    <header>
-        <h1>Prueba 1: La inscripción en la piedra</h1>
-        <a class="btn-volver-empezar" href="index.php?reset=1">Volver a empezar</a>
-    </header>
 
-    <main class="contenido">
-        
-            <p>
-                Avanzas hasta el castillo, en la entrada encuentras una losa tallada con letras góticas, 
-                está medio oculta por musgo y es dificil de leer por lo borrosa que está.
-                Debes leer lo que pone en voz alta.
-            </p>
+<header>
+    <h1>Prueba 1: La inscripción de la piedra</h1>
+    <a class="btn-volver-empezar" href="index.php?reset=1">Volver a empezar</a>
+</header>
 
-            <div>
-                <img src="imagenes/img-prueba1.png" alt="Losa con inscripción" class="img-inscription">
-            </div>
-            <!--Muestra intentos restantes-->
-            <p class="info">Intentos restantes: <?php echo getIntentosRestantes($prueba); ?></p>
+<main class="content">
 
-            <!--Muestra pista-->
-            <p class="pista">Pista: <?php echo htmlspecialchars($pistaMostrada); ?></p>
+    <p>
+        Avanzas hasta el castillo, en la entrada encuentras una losa tallada con letras góticas, 
+        está medio oculta por musgo y es dificil de leer por lo borrosa que está.
+        Debes leer lo que pone en voz alta.
+    </p>
 
-            <form method="post" action="prueba1.php" class="form-challenge">
-                <label for="respuesta1">Escribe la palabra:</label>
-                <input id="respuesta1" name="respuesta1" type="text" required>
+    <img src="imagenes/img-prueba1.png" alt="Losa con inscripción" class="img-inscription">
 
-                <div class="btn">
-                    <button type="submit" class="boton principales">Enviar</button>
-                </div>
 
-                <div class="pista-actions">
-                    <input type="hidden" id="confirm_extra" name="confirm_extra" value="0">
-                    <button type="button" id="btnPistaExtra">Pedir pista (1 disponible)</button>
-                </div>
-            </form>
-            
-        
-    </main>
+    <p class="info">Intentos restantes: <?php echo getIntentosRestantes($prueba); ?></p>
+    <p class="mensaje"><?php echo $mensaje; ?></p>
+    <p class="pista"><?php echo $pistaMostrada ? "Pista: $pistaMostrada" : ""; ?></p>
 
-    <script src="interactividad.js"></script>
+    <form method="post" action="prueba1.php" class="form-challenge">
+        <label for="respuesta">Tu respuesta:</label>
+        <input id="respuesta" name="respuesta" type="text" required>
+
+        <button type="submit" class="btn primary">Enviar</button>
+
+        <div class="pista-actions">
+            <input type="hidden" name="pedir_pista_extra" value="1">
+            <input type="hidden" id="confirm_extra" name="confirm_extra" value="0">
+            <button type="button" id="btnPistaExtra" class="btn danger">Pedir pista extra (1 disponible)</button>
+        </div>
+    </form>
+
+</main>
+
+<script src="interactividad.js"></script>
 </body>
 </html>

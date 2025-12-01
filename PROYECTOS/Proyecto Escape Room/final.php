@@ -24,13 +24,18 @@ if (!isset($_SESSION['prueba1_correcta']) || !$_SESSION['prueba1_correcta']
 
     <main>
         <p>
-            Tras completar las tres pruebas, el pergamino vuelve a su lugar y la historia de Mairena del Alcor queda salvada.
-            Las calles vuelven a llenarse de vida y alegría, y todo tu esfuerzo ha servido para restaurar la historia del castillo.
+            Tras recordar la fundación de la fiesta principal del pueblo otro rayo atraviesa el cielo, las pizas del pergamino empiezan a flotar 
+            y se juntan con un brillo impresionante, unos segundos despues y como por arte de magia la oscuridad desaparece, las calles del recinto ferial 
+            se llenan de trajes de flamenca, claveles, caballos y esa alegria caracteristica de este pueblo. Con cierta calidez en el pecho sales del 
+            recinto ferial dejando esa alegria a las espaldas y decides dar un paseo por las calles llenas ahora de luz y la alegria, la ermita 
+            vuelve a estar llena de esas imagenes y flores para honrrarlas. Camino al castillo observas la vega, tierra de cultivos que esa tarde tiene un 
+            brillo especial. Finalmentes llegas al catillo de la familia Luna, donde toda esta aventura empezó, miras hacia el muro de la primera inscripsión 
+            y te alegra ver que cuenta la historia del castillo. Con una sonrisa pasa hasta el anochecer leyendo la esa inscripción para no permitir que la historia 
+            vuelva a morir y paseando por sus jardines.
         </p>
 
         <div>
             <a href="index.php?reset=1" class="boton principales">Jugar de nuevo</a>
-            <a href="Documentacion.md" target="_blank" class="boton">Ver documentación</a>
         </div>
     </main>
 </body>
