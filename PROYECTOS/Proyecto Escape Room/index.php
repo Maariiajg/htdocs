@@ -1,6 +1,6 @@
 <?php
 session_start();
-// Reiniciar la sesión / estado si se pulsa "Volver a empezar" desde cualquier página
+// Reiniciar la sesión si se pulsa "Volver a empezar" desde cualquier página
 if (isset($_GET['reset']) && $_GET['reset'] == '1') {
     session_unset();
     session_destroy();
