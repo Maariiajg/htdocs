@@ -9,15 +9,8 @@
         public function __construct($idUsuario, $nombre, $usuario, $contrasenna){
         $this->idUsuario = $idUsuario;
         $this->nombre = $nombre;
-        $this->usuario = $usuario;
+        $this->usuario = $nombreUsuario;
         $this->contrasenna = $contrasenna;
-        }
-
-        public function getIdUsuario(){ 
-        return $this->nombre; 
-        }
-        public function setIdUsuario($idUsuario){ 
-            $this->idUsuario = $idUsuario; 
         }
 
         public function getNombre(){ 
@@ -27,11 +20,11 @@
             $this->nombre = $nombre; 
         }
 
-        public function getUsuario(){ 
-            return $this->usuario; 
+        public function getNombreUsuario(){ 
+            return $this->nombreUsuario; 
         }
-        public function setUsuario($usuario){ 
-            $this->usuario = $usuario; 
+        public function setNombreUsuario($nombreUsuario){ 
+            $this->nombreUsuario = $nombreUsuario; 
         }
 
         public function getContrasenna(){ 
@@ -40,7 +33,14 @@
         public function setContrasenna($contrasenna){ 
             $this->contrasenna = $contrasenna; 
         }
+
+        // Método __toString
+        public function __toString(): string {
+            return "Usuario: {$this->nombre} (Login: {$this->nombreUsuario})";
+        }
     }
+
+    
 
     
 ?>
