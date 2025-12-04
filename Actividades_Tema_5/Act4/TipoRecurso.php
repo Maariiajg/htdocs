@@ -1,20 +1,25 @@
 <?php
-class TipoRecurso{
-    private $nombre;
+namespace grtic;
 
-    public function __construct($nombre){
+class TipoRecurso {
+    private string $nombre;
+    
+    public function __construct(string $nombre) {
         $this->nombre = $nombre;
     }
-
-    public function getNombre(){
+    
+    // Getters y Setters
+    public function getNombre(): string {
         return $this->nombre;
     }
-    public function setNombre($nombre){
+    
+    public function setNombre(string $nombre): void {
         $this->nombre = $nombre;
     }
-
-    public function __toString(){
-        return $this->nombre;
+    
+    // Método __toString
+    public function __toString(): string {
+        return "Tipo de Recurso: {$this->nombre}";
     }
 }
 ?>

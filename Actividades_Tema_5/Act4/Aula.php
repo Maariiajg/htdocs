@@ -1,5 +1,8 @@
 <?php
-class Aula extends Recurso{
+
+namespace grtic;
+
+class Aula extends TipoRecurso{
     private $ubicacion;
     private $tipoAula;
 
