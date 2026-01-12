@@ -1,0 +1,19 @@
+{
+    "name": "mjimgon946/cine-con-base-datos",
+    "autoload": {
+        "psr-4": {
+            "Mjimgon946\\CineConBaseDatos\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Maariiajg",
+            "email": "marijimegonz@gmail.com"
+        }
+    ],
+    "require": {
+        "endroid/qr-code": "^4.8",
+        "phpmailer/phpmailer": "^7.0",
+        "dompdf/dompdf": "^3.1"
+    }
+}
