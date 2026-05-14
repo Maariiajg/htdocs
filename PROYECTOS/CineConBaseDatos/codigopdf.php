@@ -1,38 +1,64 @@
 <?php
 session_start();
-
 require_once 'vendor/autoload.php';
+
 use Dompdf\Dompdf;
+use Dompdf\Options;
+use Helpers\Debug;
 
-// Comprobar datos recibidos por GET
-if (!isset($_GET['usuario'], $_GET['asiento'], $_GET['cine'])) {
-    die("Faltan datos para generar el PDF.");
+if (!isset($_SESSION['usuario'])) {
+    die("No autorizado");
 }
-//sanear datos
-$usuario = htmlspecialchars($_GET['usuario']);
-$asiento = htmlspecialchars($_GET['asiento']);
-$cine    = htmlspecialchars($_GET['cine']);
 
-// Ruta al QR temporal 
-$qr_file = "http://localhost/proyectos/cine/qr_temp.png"; //ruta a la imagen
+try {
+    $usuario = $_SESSION['usuario'];
+    $cine = $_SESSION['cine'];
+    $asiento = $_SESSION['asiento'];
+    $qr_file = 'assets/images/qr_temp.svg';
 
-// Estructura del PDF y añadimos imagen
-$qr_base64 = base64_encode(file_get_contents($qr_file)); //imagen en base 64
-$html = "
-<h1>Entrada de Cine</h1>
-<p><strong>Usuario:</strong> $usuario</p>
-<p><strong>Asiento:</strong> $asiento</p>
-<p><strong>Cine:</strong> $cine</p>
-<p><strong>Código QR:</strong></p>
-<img src='data:image/png;base64,$qr_base64' style='width:200px;'>"; //añadimos la imagen al pdf
+    // Convertir SVG a Base64
+    $imageData = base64_encode(file_get_contents($qr_file));
+    $src = 'data:image/svg+xml;base64,' . $imageData;
 
-// Crear PDF
-$dompdf = new Dompdf();
-$dompdf->loadHtml($html);
-$dompdf->setPaper("A4", "portrait");
-$dompdf->set_option('isRemoteEnabled', true);
-$dompdf->render();
+    $options = new Options();
+    $options->set('isHtml5ParserEnabled', true);
+    $options->set('isRemoteEnabled', true);
+    $dompdf = new Dompdf($options);
 
-// Descargar PDF
-$dompdf->stream("entrada_cine.pdf", ["Attachment" => true]);
-?>
+    $html = "
+    <html>
+    <head>
+        <style>
+            body { font-family: 'Helvetica', sans-serif; text-align: center; color: #333; }
+            .ticket { border: 2px dashed #333; padding: 20px; border-radius: 10px; margin-top: 50px; }
+            h1 { color: #0f0c29; }
+            .details { margin: 20px 0; font-size: 1.2rem; }
+            .qr { margin-top: 20px; }
+        </style>
+    </head>
+    <body>
+        <div class='ticket'>
+            <h1>CINE PREMIUM</h1>
+            <p>Comprobante de Entrada</p>
+            <div class='details'>
+                <strong>Usuario:</strong> $usuario <br>
+                <strong>Cine:</strong> $cine <br>
+                <strong>Asiento:</strong> $asiento
+            </div>
+            <div class='qr'>
+                <img src='$src' width='200'>
+            </div>
+            <p style='font-size: 0.8rem; margin-top: 20px;'>Presente este código en la entrada del cine.</p>
+        </div>
+    </body>
+    </html>";
+
+    $dompdf->loadHtml($html);
+    $dompdf->setPaper('A4', 'portrait');
+    $dompdf->render();
+    $dompdf->stream("entrada_" . $usuario . ".pdf", ["Attachment" => true]);
+
+} catch (Exception $e) {
+    Debug::log($e->getMessage(), 'PDF_ERROR');
+    echo "Error al generar PDF: " . $e->getMessage();
+}

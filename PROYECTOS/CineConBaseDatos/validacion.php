@@ -1,64 +1,51 @@
 <?php
 session_start();
-require_once "conexion.php";
-require_once "Cliente.php"; 
+require_once 'vendor/autoload.php';
 
-echo $_POST["usuario"];
-echo $_POST["contrasenna"];
-echo $_POST["correo"];
-echo $_POST["cine"];
+use Helpers\Debug;
+use Config\Database;
+use Models\Cliente;
+
 try {
-
-    //Comprobar que llegan los datos
-    if (!isset($_POST['usuario'], $_POST['contrasenna'], $_POST['correo'], $_POST['cine'])) {
-        throw new Exception("Faltan datos del formulario.");
+    // 1. Verificar si vienen datos
+    if (empty($_POST['usuario']) || empty($_POST['password']) || empty($_POST['correo']) || empty($_POST['cine'])) {
+        throw new Exception("Todos los campos son obligatorios.");
     }
 
-    $usuario = trim($_POST['usuario']);
-    $contrasenna = trim($_POST['contrasenna']);
-    $correo = trim($_POST['correo']);
-    $cine = trim($_POST['cine']);
+    $usuario = $_POST['usuario'];
+    $password = $_POST['password'];
+    $correo = $_POST['correo'];
+    $cine = $_POST['cine'];
 
-    //Array de usuarios permitidos
-    $personas = [
-        "Antonio" => "erchulo",
-        "Noelia"  => "lguapa",
-        "Pepe"    => "elpsao",
-        "Sofia"   => "lalista"
-    ];
-
-    //Validar si el usuario existe
-    if (!array_key_exists($usuario, $personas)) {
-        throw new Exception("El usuario no existe.");
-    }
-
-    //Validar contraseña
-    if ($personas[$usuario] !== $contrasenna) {
-        throw new Exception("Contraseña incorrecta.");
-    }
-
-    //Validar formato de correo electrónico
+    // 2. Validar formato de correo
     if (!filter_var($correo, FILTER_VALIDATE_EMAIL)) {
-        throw new Exception("Formato de correo electrónico inválido.");
+        throw new Exception("El formato del correo electrónico no es válido.");
     }
 
-    //Guardar los datos en sesión
-    $_SESSION['usuario'] = $usuario;
-    $_SESSION['correo'] = $correo;
-    $_SESSION['cine'] = $cine; 
-    
-    //Guardar el cine en una cookie de 1 hora
-    setcookie("cine", $cine, time() + 3600);
+    // 3. Autenticar contra la Base de Datos
+    $pdo = Database::getInstance()->getConnection();
+    $cliente = Cliente::autenticar($pdo, $usuario, $password);
 
-    //Redirigir a asientos.php si todo es correcto
+    if (!$cliente) {
+        throw new Exception("Usuario o contraseña incorrectos.");
+    }
+
+    // 4. Verificar si el correo coincide con el del cliente autenticado
+    if ($cliente->getCorreo() !== $correo) {
+        throw new Exception("El correo electrónico no coincide con el registrado para este usuario.");
+    }
+
+    // 5. Iniciar sesión y propagar cookie
+    $_SESSION['usuario'] = $cliente->getUsuario();
+    $_SESSION['cliente_id'] = $cliente->getId();
+    $_SESSION['correo'] = $cliente->getCorreo();
+    setcookie('cine_seleccionado', $cine, time() + 3600, "/");
+
+    // Redirigir a asientos
     header("Location: asientos.php");
     exit();
 
 } catch (Exception $e) {
-
-    // Volver a inicio.php con mensaje de error
-    $mensaje = urlencode($e->getMessage());
-    header("Location: inicio.php?error={$mensaje}");
-    exit();
+    Debug::log($e->getMessage(), 'VALIDATION_ERROR');
+    Debug::redirectWithError($e->getMessage());
 }
-?>

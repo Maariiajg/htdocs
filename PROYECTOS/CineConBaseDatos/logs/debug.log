@@ -1,0 +1,16 @@
+2026-04-29 10:48:12 [QR_GENERATION_ERROR]: Unable to generate image: please check if the GD extension is enabled and configured correctly
+----------------------------------------
+2026-04-29 10:48:12 [ERROR_REDIRECT]: Error al generar la entrada: Unable to generate image: please check if the GD extension is enabled and configured correctly
+----------------------------------------
+2026-04-29 10:51:56 [ERROR_REDIRECT]: No se ha seleccionado asiento.
+----------------------------------------
+2026-04-29 10:56:51 [VALIDATION_ERROR]: Usuario o contraseña incorrectos.
+----------------------------------------
+2026-04-29 10:56:51 [ERROR_REDIRECT]: Usuario o contraseña incorrectos.
+----------------------------------------
+2026-04-29 10:57:03 [VALIDATION_ERROR]: Usuario o contraseña incorrectos.
+----------------------------------------
+2026-04-29 10:57:03 [ERROR_REDIRECT]: Usuario o contraseña incorrectos.
+----------------------------------------
+2026-04-29 11:06:28 [ERROR_REDIRECT]: No se ha seleccionado asiento.
+----------------------------------------

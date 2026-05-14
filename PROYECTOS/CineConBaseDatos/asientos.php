@@ -1,47 +1,43 @@
 <?php
 session_start();
+require_once 'vendor/autoload.php';
 
-// Verificar que el usuario tiene la sesión iniciada
-if (!isset($_SESSION['usuario'], $_SESSION['correo'])) {
-    header("Location: inicio.php?error=" . urlencode("Debe iniciar sesión."));
-    exit();
+use Helpers\Debug;
+
+if (!isset($_SESSION['usuario'])) {
+    Debug::redirectWithError("Debes iniciar sesión primero.");
 }
 
-//Verificar que existe la cookie del cine, sino existe redirigimos al formulario
-if (!isset($_COOKIE['cine'])) {
-    header("Location: inicio.php?error=" . urlencode("Debe seleccionar un cine."));
-    exit();
-}
-
-//saneamos los datos introducidos en usuario y cine
-$usuario = htmlspecialchars($_SESSION['usuario']); 
-$cine = htmlspecialchars($_COOKIE['cine']);
+$cine = $_COOKIE['cine_seleccionado'] ?? 'Cine no seleccionado';
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Selección de Asientos</title>
-    <link rel="stylesheet" href="css/estilos.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selección de Asientos - Cine Premium</title>
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
+    <div class="container animate-fade-in">
+        <h1 style="font-size: 1.8rem;">🎭 Selecciona tu Asiento</h1>
+        <p style="text-align: center; color: var(--text-secondary); margin-bottom: 20px;">
+            Bienvenido, <strong><?= htmlspecialchars($_SESSION['usuario']) ?></strong><br>
+            Cine: <strong><?= htmlspecialchars($cine) ?></strong>
+        </p>
 
-    <h1>Bienvenido, <?php echo $usuario; ?></h1>
-    <h2>Cine seleccionado: <?php echo $cine; ?></h2>
-    <h3>Seleccione su asiento:</h3>
+        <div class="seats-grid">
+            <?php for ($i = 1; $i <= 4; $i++): ?>
+                <a href="codigo.php?asiento=<?= $i ?>" class="seat-link">
+                    <div class="seat-icon">💺</div>
+                    <span>Asiento <?= $i ?></span>
+                </a>
+            <?php endfor; ?>
+        </div>
 
-    <table border="1">
-        <th colspan="2">Asientos</th>
-        <tr>
-            <td><a href="codigo.php?asiento=1">1</a></td>
-            <td><a href="codigo.php?asiento=2">2</a></td>
-        </tr>
-        <tr>
-            <td><a href="codigo.php?asiento=3">3</a></td>
-            <td><a href="codigo.php?asiento=4">4</a></td>
-        </tr>
-    </table>
-
+        <div style="margin-top: 30px; text-align: center;">
+            <a href="inicio.php" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem;">Cerrar Sesión</a>
+        </div>
+    </div>
 </body>
 </html>

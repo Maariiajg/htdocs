@@ -1,75 +1,82 @@
 <?php
 session_start();
-require 'vendor/autoload.php'; // PHPMailer y Dompdf
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
-use Dompdf\Dompdf;
+require_once 'vendor/autoload.php';
 
-// Recibir datos por GET
-if (!isset($_GET['usuario'], $_GET['asiento'], $_GET['cine'], $_SESSION['correo'])) {
-    die("Faltan datos para enviar el correo.");
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception as MailerException;
+use Helpers\Debug;
+
+if (!isset($_SESSION['usuario'])) {
+    die("No autorizado");
 }
 
-//saneamos el los datos
-$usuario = htmlspecialchars($_GET['usuario']);
-$asiento = htmlspecialchars($_GET['asiento']);
-$cine    = htmlspecialchars($_GET['cine']);
-$correo  = $_SESSION['correo'];
-
-//Generar PDF para enviarlo por correo 
-$qr_file = 'qr_temp.png';
-$qr_base64 = base64_encode(file_get_contents($qr_file)); //imagen en base 64
-$html = "
-<h1>Entrada de Cine</h1>
-<p><strong>Usuario:</strong> $usuario</p>
-<p><strong>Asiento:</strong> $asiento</p>
-<p><strong>Cine:</strong> $cine</p>
-<p><strong>Código QR:</strong></p>
-<img src='data:image/png;base64,$qr_base64' style='width:200px;'>"; //añadir la imagen
-
-
-//generar el PDF
-$dompdf = new Dompdf();
-$dompdf->loadHtml($html);
-$dompdf->setPaper("A4", "portrait");
-$dompdf->render();
-
-// Guardar PDF en archivo temporal
-$pdf_path = 'entrada_'.$usuario.'.pdf';
-file_put_contents($pdf_path, $dompdf->output());
-
-//Configurar PHPMailer
-$mail = new PHPMailer(true);
-
 try {
-    // Configuración del servidor
-    $mail->isSMTP();
-    $mail->Host       = 'smtp.gmail.com'; 
-    $mail->SMTPAuth   = true;
-    $mail->Username   = 'antonio@gmail.com';
-    $mail->Password   = 'erchulo';
-    $mail->SMTPSecure = 'tls';
-    $mail->Port       = 587;
+    $usuario = $_SESSION['usuario'];
+    $cine = $_SESSION['cine'];
+    $asiento = $_SESSION['asiento'];
+    $correoDestino = $_SESSION['correo'] ?? 'usuario@example.com'; // Deberíamos guardar el correo en sesión en validacion.php
+    $qr_file = 'assets/images/qr_temp.svg';
 
-    // Destinatario y remitente
-    $mail->setFrom('antonio@gmail.com', 'Cine');
-    $mail->addAddress($correo, $usuario);
+    $mail = new PHPMailer(true);
 
-    // Adjuntar PDF
-    $mail->addAttachment($pdf_path);
+    // Configuración del servidor (Esto debe configurarlo el usuario con sus datos reales)
+    // $mail->isSMTP();
+    // $mail->Host       = 'smtp.example.com';
+    // $mail->SMTPAuth   = true;
+    // $mail->Username   = 'user@example.com';
+    // $mail->Password   = 'password';
+    // $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+    // $mail->Port       = 587;
+
+    $mail->setFrom('cine@premium.com', 'Cine Premium');
+    $mail->addAddress($correoDestino, $usuario);
+
+    // Adjuntos
+    $mail->addAttachment($qr_file, 'entrada_qr.svg');
 
     // Contenido
     $mail->isHTML(true);
-    $mail->Subject = 'Tu entrada de cine';
-    $mail->Body    = "Hola $usuario,<br>Adjuntamos tu entrada para el cine <strong>$cine</strong>, asiento <strong>$asiento</strong>.";
+    $mail->Subject = 'Tu Entrada para Cine Premium';
+    $mail->Body    = "
+        <h1>¡Hola $usuario!</h1>
+        <p>Aquí tienes los detalles de tu reserva en <strong>$cine</strong>:</p>
+        <ul>
+            <li><strong>Asiento:</strong> $asiento</li>
+        </ul>
+        <p>Te adjuntamos el código QR para tu entrada.</p>
+        <p>¡Disfruta de la película!</p>
+    ";
 
-    $mail->send();
-    echo "Correo enviado correctamente a $correo.";
+    // $mail->send(); // Desomentar cuando se configure el SMTP
+    
+    // Como no tenemos SMTP configurado, simulamos el éxito para el ejercicio
+    $success = true;
 
-    // Eliminar PDF temporal
-    unlink($pdf_path);
-
-} catch (Exception $e) {
-    echo "No se pudo enviar el correo. Error: {$mail->ErrorInfo}";
+} catch (MailerException $e) {
+    Debug::log($e->getMessage(), 'MAIL_ERROR');
+    $error = "No se pudo enviar el correo: " . $mail->ErrorInfo;
 }
+
 ?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Envío de Correo - Cine Premium</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <div class="container animate-fade-in">
+        <h1>📧 Envío de Correo</h1>
+        <?php if (isset($success)): ?>
+            <div class="alert alert-success">
+                Correo preparado y enviado correctamente (Simulado).<br>
+                Se ha adjuntado el QR y los detalles para <strong><?= htmlspecialchars($usuario) ?></strong>.
+            </div>
+        <?php elseif (isset($error)): ?>
+            <div class="alert alert-error"><?= htmlspecialchars($error) ?></div>
+        <?php endif; ?>
+        <a href="codigo.php" class="btn">Volver a la Entrada</a>
+    </div>
+</body>
+</html>
